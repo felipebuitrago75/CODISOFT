@@ -2,7 +2,17 @@ language: java
 install: skip
 os: linux
 dist: trusty
-jdk: oraclejdk11
+jdk: oraclejdk7
+oraclejdk8
+oraclejdk9
+oraclejdk10
+oraclejdk11
+openjdk7
+openjdk8
+openjdk9
+openjdk10
+openjdk11
+openjdk-ea
 
 script:
   - ./build.sh

@@ -6,5 +6,5 @@ jdk: oraclejdk8
 
 script:
 - chmod +x build.sh
-  - chmod +x ./fxmanager-auth/gradlew build --scan -s
-  - chmod +x ./fxmanager-management/gradlew build --scan -s
+  - ./fxmanager-auth/gradlew build --scan -s
+  - ./fxmanager-management/gradlew build --scan -s

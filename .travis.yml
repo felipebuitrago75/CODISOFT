@@ -5,5 +5,4 @@ dist: trusty
 jdk: oraclejdk8
 
 script:
-  - ./fxmanager-auth/gradlew build --scan -s
-  - ./fxmanager-management/gradlew build --scan -s
+  - ./build.sh

@@ -4,4 +4,4 @@
  [![Build Status](https://travis-ci.com/felipebuitrago75/CODISOFT.svg?token=syyz4PztncvExrqkYPBF&branch=master)](https://travis-ci.com/felipebuitrago75/CODISOFT)
  
  Docker :
- https://img.shields.io/docker/cloud/build/felipebuitrago75/fxmanager?style=flat-square
+![Docker Cloud Build Status](https://img.shields.io/docker/cloud/build/felipebuitrago75/fxmanager?style=flat-square)

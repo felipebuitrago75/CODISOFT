@@ -5,5 +5,14 @@ dist: trusty
 jdk: oraclejdk11
 services:
   - docker
+before_install:
+  # login to docker registries (dockerhub + heroku)
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
 script:
   - ./build.sh
+deploy:
+  provider: script
+  script:
+    # push to dockerhub
+    docker push felipebuitrago75/fxmanager;
+  branch: master

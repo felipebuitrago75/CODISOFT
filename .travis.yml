@@ -1,1 +1,8 @@
 language: java
+install: skip
+
+jdk: oraclejdk8
+
+script:
+  - ./fxmanager-auth/gradlew build --scan -s
+  - ./fxmanager-management/gradlew build --scan -s

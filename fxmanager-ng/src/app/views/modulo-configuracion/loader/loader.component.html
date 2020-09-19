@@ -1,0 +1,30 @@
+<div class="loading-screen-wrapper">
+    <div class="loading-screen-icon">
+        <i style="color: #13c2ff;" class="fa fa-circle-o-notch fa-spin fa-2x fa-fw"></i>
+        <span style="color: white" class="">Loading...</span>
+    </div>
+  </div>
+
+  <style>
+  .loading-screen-wrapper {
+    z-index: 9999999999999999999999999999999999;
+    position: fixed;
+    top: 0;
+    background-color: rgba(0, 0, 0, 0.6);
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+.loading-screen-icon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.fa-spin {
+    -webkit-animation: fa-spin 0.5s infinite linear !important;
+    animation: fa-spin 0.5s infinite linear !important;
+}
+  </style>

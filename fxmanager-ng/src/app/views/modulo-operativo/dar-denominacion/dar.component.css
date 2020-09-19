@@ -1,0 +1,23 @@
+.contenedor-denominaciones{
+    position: absolute;
+    padding: 20px;
+    top: 15px;
+    left: 25%;
+    width: 50%;
+    height: 620px;
+    overflow: scroll;
+    background-color: #e4e5e6;
+    border: 1px solid;
+    border-color: #bdbfbe;
+    z-index: 999999999;
+}
+
+.contenedor{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 9999999;
+}

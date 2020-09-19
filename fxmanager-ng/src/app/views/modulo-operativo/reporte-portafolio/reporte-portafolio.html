@@ -1,0 +1,158 @@
+<style>
+  strong {
+    font-size: 12px;
+  }
+</style>
+<div class="animated fadeIn">
+  <!--/.row-->
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-header">
+          <strong>Reporte Portafolio</strong>
+
+        </div>
+        <div class="card-body">
+          <div class="row">
+
+
+            <div class="form-group col-md-3">
+              <label class="form-control-label">Fecha</label>
+              <br>
+              <p-calendar [(ngModel)]="fechaFiltro" [locale]="calendarLanguage" dateFormat="dd/mm/yy"></p-calendar>
+
+            </div>
+
+            <div class="form-group col-md-12  form-actions">
+              <button type="button" (click)="buscarConFiltro()" class="btn btn-sm btn-primary float-right btn-primary-spacing">{{getMsg('basecrud.actions.button.search')}}</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!--/.col-->
+    </div>
+  </div>
+</div>
+
+<div class="animated fadeIn">
+  <!--/.row-->
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-header">
+          <strong>Cierres</strong>
+        </div>
+        <div class="card-body"  style="overflow: scroll;">
+          <div class="row">
+            <div class="form-group col-md-12">
+              <div class="row" style="width: 100%; padding: 20px;">
+                <div *ngIf="filasreporte" class="col-md-12">
+                  <div class="row" style="margin-bottom: 40px;">
+                    <div class="col-md-12">
+                      <h4>REPORTE PORTAFOLIO</h4>
+                      <h4>
+                        <small>INTERAMERICAN MONEY</small>
+                      </h4>
+                      <p>
+                        <strong>FECHA: {{fechaFiltro | date: 'dd/MM/yyyy'}}</strong>
+                      </p>
+                    </div>
+                  </div>
+
+
+                <div class="row">
+                  <div  class="col-md-12" style="margin-top: 10px;" >
+                    <div class="row">
+                       <div class="col-md-1" style="margin: 0px 0px; font-size: 9px">
+                          Sucursal
+                       </div>
+                       <div class="col-md-1" style="margin: 0px 0px; font-size: 10px">
+                           Moneda
+                       </div>
+                       <div class="col-md-2" style="margin: 0px 0px; font-size: 12px">
+                           Nominal
+                       </div>
+                       <div class="col-md-2" style="margin: 0px 0px; font-size: 12px">
+                           Costo Promedio 
+                       </div>
+                       <div class="col-md-2" style="margin: 0px 0px; font-size: 12px">
+                          Valor Compra 
+                       </div>
+                       <div class="col-md-2" style="margin: 0px 0px; font-size: 12px">
+                           Precio Valoracion 
+                       </div>
+                       <div class="col-md-2" style="margin: 0px 0px; font-size: 12px">
+                          Valoracion 
+                       </div>
+                    </div>
+                    
+                 </div>
+                </div>
+
+                <div class="row" *ngFor="let item of filasreporte ; index as i" style="font-size: 12px;"> 
+
+                  <div *ngIf="i % cantidadFx == 0" class="col-md-12" style="margin-top: 10px;" >
+                     <div class="row">
+                        <div class="col-md-1" style="margin: 0px 0px; font-size: 10px">
+                            {{item.codigoSucursal}}
+                        </div>
+                        <div class="col-md-1" style="margin: 0px 0px; font-size: 12px">
+                            {{item.codigoMoneda}}
+                        </div>
+                        <div class="col-md-2" style="margin: 0px 0px; font-size: 12px">
+                            {{item.nominal}}
+                        </div>
+                        <div class="col-md-2" style="margin: 0px 0px; font-size: 12px">
+                            {{item.costoPromedio  | currency:' ':'code' }}
+                        </div>
+                        <div class="col-md-2" style="margin: 0px 0px; font-size: 12px">
+                            {{item.valorCompra | currency:' ':'code' }}
+                        </div>
+                        <div class="col-md-2" style="margin: 0px 0px; font-size: 12px">
+                            {{item.precioValoracion | currency:' ':'code' }}
+                        </div>
+                        <div class="col-md-2" style="margin: 0px 0px; font-size: 12px">
+                            {{item.valoracion | currency:' ':'code' }}
+                        </div>
+                     </div>
+                     
+                  </div>
+
+                  <div *ngIf="i % cantidadFx != 0"  class="col-md-12">
+                      <div class="row">
+                          <div class="col-md-1" style="margin: 0px 0px; font-size: 10px">
+                              {{item.codigoSucursal}}
+                          </div>
+                          <div class="col-md-1" style="margin: 0px 0px; font-size: 12px">
+                              {{item.codigoMoneda}}
+                          </div>
+                          <div class="col-md-2" style="margin: 0px 0px; font-size: 12px">
+                              {{item.nominal}}
+                          </div>
+                          <div class="col-md-2" style="margin: 0px 0px; font-size: 12px">
+                              {{item.costoPromedio | currency:' ':'code' }}
+                          </div>
+                          <div class="col-md-2" style="margin: 0px 0px; font-size: 12px">
+                              {{item.valorCompra | currency:' ':'code' }}
+                          </div>
+                          <div class="col-md-2" style="margin: 0px 0px; font-size: 12px">
+                              {{item.precioValoracion | currency:' ':'code' }}
+                          </div>
+                          <div class="col-md-2" style="margin: 0px 0px; font-size: 12px">
+                              {{item.valoracion | currency:' ':'code' }}
+                          </div>
+                       </div>
+                  </div>
+                
+                </div>
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!--/.col-->
+    </div>
+  </div>
+</div>

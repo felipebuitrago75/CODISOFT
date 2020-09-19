@@ -1,0 +1,538 @@
+<app-header [fixed]="true" [navbarBrandFull]="{src: 'assets/img/brand/logo.png', width: 89, height: 25, alt: 'CoreUI Logo'}"
+  [navbarBrandMinimized]="{src: 'assets/img/brand/sygnet.svg', width: 30, height: 30, alt: 'CoreUI Logo'}" [sidebarToggler]="'lg'"
+  [asideMenuToggler]="'lg'">
+
+  <!---
+  <ul class="nav navbar-nav d-md-down-none">
+    <li class="nav-item px-3">
+      <a class="nav-link" href="#">Dashboard</a>
+    </li>
+    <li class="nav-item px-3">
+      <a class="nav-link" href="#">Users</a>
+    </li>
+    <li class="nav-item px-3">
+      <a class="nav-link" href="#">Settings</a>
+    </li>
+  </ul>
+  -->
+  
+  <ul class="nav navbar-nav ml-auto">
+
+    <li *ngIf="turno" class="nav-item d-md-down-none">
+      <div class="col-md-12" style="position: relative; bottom: -8px;">
+        <p>
+          <strong>COD Turno:</strong> {{turno.id}} -
+          <strong>Caja:</strong> {{caja.nombre}} -
+          <strong>Sucursal:</strong> {{sucursal.nombre}}
+          <strong>Usuario: </strong> {{nombreUsuario| uppercase}} </p>
+      </div>
+    </li>
+    <li class="nav-item d-md-down-none">
+        <a  *ngIf="rol=='SUPER_ADMIN' "class="nav-link" (click)="realizarCierreFecha()">
+          <i style="font-size: 22px;" class="fa fa-window-close-o fa-3"></i>
+        </a>
+      </li>
+    <li class="nav-item d-md-down-none">
+      <a  *ngIf="rol=='ROLE_ADMIN' || rol=='ROLE_JEFE_OPERADOR' || rol=='SUPER_ADMIN'  "class="nav-link" (click)="realizarCierre()">
+        <i style="font-size: 22px;" class="fa fa-close fa-3"></i>
+      </a>
+    </li>
+    
+    <li class="nav-item d-md-down-none">
+      <a class="nav-link" (click)="mostrarSesion()">
+        <i style="font-size: 22px;" class="fa fa-ticket fa-3"></i>
+      </a>
+    </li>
+    <li class="nav-item d-md-down-none">
+      <a class="nav-link" (click)="realizarArqueoBoton()">
+        <i style="font-size: 22px;" class="fa fa-list-alt fa-3"></i>
+      </a>
+    </li>
+    <li class="nav-item d-md-down-none">
+      <a class="nav-link" (click)="mostrarSaldos()">
+        <i style="font-size: 22px;" class="fa fa-dollar fa-3"></i>
+      </a>
+    </li>
+
+  </ul>
+</app-header>
+<div class="app-body">
+
+  <app-sidebar [fixed]="true" [display]="'lg'">
+    <app-sidebar-nav [navItems]="navItems" [perfectScrollbar] [disabled]="sidebarMinimized"></app-sidebar-nav>
+    <app-sidebar-minimizer></app-sidebar-minimizer>
+  </app-sidebar>
+  <!-- Main content -->
+  <main class="main">
+    <!-- Breadcrumb -->
+    <br>
+    <div class="container-fluid">
+      <p-growl [baseZIndex]="99999999999" [style]="{'z-index':'99999999999999999'}" [(value)]="msgs" life="5000"></p-growl>
+      <router-outlet></router-outlet>
+    </div>
+    <!-- /.container-fluid -->
+  </main>
+  <app-aside [fixed]="true" [display]="'lg'">
+    <tabset>
+      <tab>
+        <ng-template tabHeading>
+          <i class="icon-list"></i>
+        </ng-template>
+        <div class="list-group list-group-accent">
+          <div class="col-lg-12" style="padding: 0px">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th style="width: 10%">Moneda</th>
+                  <th style="width: 45%">Compra</th>
+                  <th style="width: 45%">Venta</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let moneda of listaPreciosSucursal">
+                  <td>
+                    <span style="font-size: 11px;">{{moneda.fx.codigo}}</span>
+                  </td>
+                  <td>
+                    <span style="font-size: 12px;" class="badge badge-success"> {{moneda.precioCompra | currency:' ':'code' }}</span>
+                  </td>
+                  <td>
+                    <span style="font-size: 12px;" class="badge badge-primary"> {{moneda.precioVenta | currency:' ':'code' }}</span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+
+          </div>
+
+        </div>
+      </tab>
+      <tab>
+        <ng-template tabHeading>
+          <i class="fa fa-dollar "></i>
+        </ng-template>
+        <div class="p-3">
+          <div *ngIf="turno" class="col-md-12">
+            <div class="row">
+              <div class="col-md-12 " style="padding-left: 10px; padding-right: 10px">
+                <button (click)="actualizarSaldos()" type="button" class="btn btn-md btn-primary btn-block">Actualizar</button>
+
+                <div class="row" style="text-align: center; margin-bottom: 15px;" *ngFor="let saldo of caja.listaSaldos">
+                  <p style="font-size: 20px;">
+                    <span>TOTAL: {{saldo.moneda.codigo }}</span>{{saldo.nominal | currency:' ':'code'}}</p>
+                  <p-table [value]="saldo.denominacionesYCantidades">
+                    <ng-template pTemplate="header">
+                      <tr>
+                        <th style="width:35%; font-size: 9px">Denominacion</th>
+                        <th style="width:20%; font-size: 10px">#</th>
+                        <th style="width:45%; font-size: 10px">Subtotal</th>
+
+                      </tr>
+                    </ng-template>
+
+                    <ng-template pTemplate="body" let-denominacionCantidad>
+                      <tr>
+                        <td style="font-size: 10px">{{denominacionCantidad.valor}}</td>
+                        <td style="font-size: 10px">{{denominacionCantidad.cantidad}}</td>
+                        <td style="font-size: 10px">{{ (denominacionCantidad.cantidad * denominacionCantidad.valor) | currency:' ':'code'}}</td>
+                      </tr>
+
+
+                    </ng-template>
+                  </p-table>
+                  <hr>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </tab>
+      <tab>
+        <ng-template tabHeading>
+          <i class="icon-speech"></i>
+        </ng-template>
+        <div class="p-3">
+          <div class="message">
+            <div class="py-3 pb-5 mr-3 float-left">
+              <div class="avatar">
+                <img src="assets/img/avatars/7.jpg" class="img-avatar" alt="admin@bootstrapmaster.com">
+                <span class="avatar-status badge-success"></span>
+              </div>
+            </div>
+            <div>
+              <small class="text-muted">Lukasz Holeczek</small>
+              <small class="text-muted float-right mt-1">1:52 PM</small>
+            </div>
+            <div class="text-truncate font-weight-bold">Lorem ipsum dolor sit amet</div>
+            <small class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt...</small>
+          </div>
+          <hr>
+          <div class="message">
+            <div class="py-3 pb-5 mr-3 float-left">
+              <div class="avatar">
+                <img src="assets/img/avatars/7.jpg" class="img-avatar" alt="admin@bootstrapmaster.com">
+                <span class="avatar-status badge-success"></span>
+              </div>
+            </div>
+            <div>
+              <small class="text-muted">Lukasz Holeczek</small>
+              <small class="text-muted float-right mt-1">1:52 PM</small>
+            </div>
+            <div class="text-truncate font-weight-bold">Lorem ipsum dolor sit amet</div>
+            <small class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt...</small>
+          </div>
+          <hr>
+          <div class="message">
+            <div class="py-3 pb-5 mr-3 float-left">
+              <div class="avatar">
+                <img src="assets/img/avatars/7.jpg" class="img-avatar" alt="admin@bootstrapmaster.com">
+                <span class="avatar-status badge-success"></span>
+              </div>
+            </div>
+            <div>
+              <small class="text-muted">Lukasz Holeczek</small>
+              <small class="text-muted float-right mt-1">1:52 PM</small>
+            </div>
+            <div class="text-truncate font-weight-bold">Lorem ipsum dolor sit amet</div>
+            <small class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt...</small>
+          </div>
+          <hr>
+          <div class="message">
+            <div class="py-3 pb-5 mr-3 float-left">
+              <div class="avatar">
+                <img src="assets/img/avatars/7.jpg" class="img-avatar" alt="admin@bootstrapmaster.com">
+                <span class="avatar-status badge-success"></span>
+              </div>
+            </div>
+            <div>
+              <small class="text-muted">Lukasz Holeczek</small>
+              <small class="text-muted float-right mt-1">1:52 PM</small>
+            </div>
+            <div class="text-truncate font-weight-bold">Lorem ipsum dolor sit amet</div>
+            <small class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt...</small>
+          </div>
+          <hr>
+          <div class="message">
+            <div class="py-3 pb-5 mr-3 float-left">
+              <div class="avatar">
+                <img src="assets/img/avatars/7.jpg" class="img-avatar" alt="admin@bootstrapmaster.com">
+                <span class="avatar-status badge-success"></span>
+              </div>
+            </div>
+            <div>
+              <small class="text-muted">Lukasz Holeczek</small>
+              <small class="text-muted float-right mt-1">1:52 PM</small>
+            </div>
+            <div class="text-truncate font-weight-bold">Lorem ipsum dolor sit amet</div>
+            <small class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt...</small>
+          </div>
+        </div>
+      </tab>
+    </tabset>
+  </app-aside>
+</div>
+<app-footer>
+  <span>
+    <a href="https://coreui.io">FXManager</a> &copy; 2019 .</span>
+</app-footer>
+
+<p-dialog [(visible)]="displayTurno" [contentStyle]="{'height':'400px', 'padding':'15px'}">
+  <p-header>
+    Iniciar o cerrar turno
+  </p-header>
+  <div class="row" style="width: 620px">
+    <div *ngIf="!turno" class="col-md-12">
+      <div class="row">
+        <div class="form-group col-md-12">
+          <label class="form-control-label">Sucursales</label>
+          <p-dropdown (onChange)="cargarListaCajas()" autoWidth="false" [style]="{'width':'100%'}" [options]="listaSucursales" [(ngModel)]="sucursal"
+            optionLabel="nombre"></p-dropdown>
+        </div>
+        <div class="form-group col-md-12">
+          <label class="form-control-label">Cajas</label>
+          <p-dropdown autoWidth="false" [style]="{'width':'100%'}" [options]="listaCajas" [(ngModel)]="caja" optionLabel="nombre"></p-dropdown>
+        </div>
+      </div>
+      <div class="row">
+        <div class="form-group col-md-12  form-actions">
+          <br/>
+          <button (click)="guardarTurno()" type="button" class="btn btn-sm btn-success float-right btn-success-spacing">Guardar</button>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="turno" class="col-md-12">
+
+      <p>En este momento tiene iniciado un turno si desea iniciar otro turno debe cerrar este turno primero</p>
+      <button (click)="realizarArqueo()" type="button" class="btn btn-block btn-danger">cerrar Turno</button>
+    </div>
+  </div>
+</p-dialog>
+
+<p-dialog [(visible)]="displaySaldos" [contentStyle]="{'height':'400px', 'padding':'15px'}">
+  <p-header>
+    Saldos en caja
+  </p-header>
+  <div class="row" style="width: 600px; height: 400px; overflow: scroll">
+    <div *ngIf="turno" class="col-md-12">
+      <div class="row">
+        <div class="col-md-12">
+          <p>Usted se encuentra actualmente en {{caja.nombre}} de la sucursal {{sucursal.nombre}} </p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12 " style="padding: 25px;">
+          <div class="row" style="text-align: center; margin-bottom: 15px;" *ngFor="let saldo of caja.listaSaldos">
+            <p style="font-size: 20px;">
+              <span>TOTAL: {{saldo.moneda.codigo }}</span>{{saldo.nominal | currency:' ':'code'}}</p>
+            <p-table [value]="saldo.denominacionesYCantidades">
+              <ng-template pTemplate="header">
+                <tr>
+                  <th style="width:50%; font-size: 12px">Denominacion</th>
+                  <th style="width:50%; font-size: 12px">Cantidad</th>
+                  <th style="width:50%; font-size: 12px">Subtotal</th>
+
+                </tr>
+              </ng-template>
+
+              <ng-template pTemplate="body" let-denominacionCantidad>
+                <tr>
+                  <td style="font-size: 11px">{{denominacionCantidad.valor | currency:' ':'code'}}</td>
+                  <td style="font-size: 11px">{{denominacionCantidad.cantidad}}</td>
+                  <td style="font-size: 11px">{{ (denominacionCantidad.cantidad * denominacionCantidad.valor) | currency:' ':'code'}}</td>
+                </tr>
+
+
+              </ng-template>
+            </p-table>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</p-dialog>
+
+
+<p-dialog [(visible)]="displayPrecierre" [closable]="false" [contentStyle]="{'height':'400px', 'padding':'15px', 'z-index':'99999999999'}">
+  <p-header>
+    Saldos en caja
+  </p-header>
+  <div class="row" style="width: 1000px; padding: 20px;">
+    <div *ngIf="precierre" class="col-md-12" style="width: 3000px; max-width: 3000px; ">
+      <div class="row" style="margin-bottom: 10px;">
+        <div class="col-md-12">
+          <h4 *ngIf="!esArqueo" >REPORTE PRECIERRE</h4>
+          <h4 *ngIf="esArqueo" >REPORTE ARQUEO PARCIAL</h4>
+          <h4>
+            <small>INTERAMERICAN MONEY</small>
+          </h4>
+          <p>
+            <strong>FECHA: {{precierre.fecha}}</strong>
+          </p>
+          <p>
+            <strong>CAJERO: {{precierre.usuario.nombre}} {{precierre.usuario.apellido}} </strong>
+          </p>
+          <p>
+            <strong>VENTANILLA: {{precierre.caja.codigoSucursal}} </strong>
+          </p>
+        </div>
+      </div>
+
+      <div class="row">
+
+        <div class="col-md-12 " style="    border-bottom: 1px solid;border-color: #d4d4d4; width: 3000px;">
+          <div style="display: inline-block; width:180px;">
+            <span>
+              <strong>MONEDA</strong>
+            </span>
+          </div>
+
+          <div style="text-align: center; display: inline-block" *ngFor="let item of filaMonedas">
+            <div style="display: inline-block; width:150px;">
+              <div style="display: inline-block; width:150px;">
+                <span>{{item.codigo}}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-12 " style="    border-bottom: 1px solid;border-color: #d4d4d4;">
+          <div style="display: inline-block; width:180px;">
+            <span>
+              <strong>SALDO INICIAL</strong>
+            </span>
+          </div>
+          <div style="text-align: center; display: inline-block" *ngFor="let item of filaSaldoInicial">
+            <div style="display: inline-block; width:150px;">
+              <span>{{item}}</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-12 " style="    border-bottom: 1px solid;border-color: #d4d4d4;">
+          <div style="display: inline-block; width:180px;">
+            <span>
+              <strong>COMPRAS</strong>
+            </span>
+          </div>
+          <div style="text-align: center; display: inline-block" *ngFor="let item of filaCompras">
+            <div style="display: inline-block; width:150px;">
+              <span style="color:forestgreen">{{item}}</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-12 " style="    border-bottom: 1px solid;border-color: #d4d4d4;">
+          <div style="display: inline-block; width:180px;">
+            <span>
+              <strong>VENTAS</strong>
+            </span>
+          </div>
+          <div style="text-align: center; display: inline-block" *ngFor="let item of filaVentas">
+            <div style="display: inline-block; width:150px;">
+              <span style="color:red">{{item}}</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-12 " style="    border-bottom: 1px solid;border-color: #d4d4d4;">
+          <div style="display: inline-block; width:180px;">
+            <span>
+              <strong>INGRESOS</strong>
+            </span>
+          </div>
+          <div style="text-align: center; display: inline-block" *ngFor="let item of filaIngresos">
+            <div style="display: inline-block; width:150px;">
+              <span style="color:forestgreen">{{item}}</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-12 " style="    border-bottom: 1px solid;border-color: #d4d4d4;">
+          <div style="display: inline-block; width:180px;">
+            <span>
+              <strong>EGRESOS</strong>
+            </span>
+          </div>
+          <div style="text-align: center; display: inline-block" *ngFor="let item of filaEgresos">
+            <div style="display: inline-block; width:150px;">
+              <span style="color:red">{{item}}</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-12 " style="    border-bottom: 1px solid;border-color: #d4d4d4;">
+          <div style="display: inline-block; width:180px;">
+            <span>
+              <strong>TRASLADOS SALIENTES</strong>
+            </span>
+          </div>
+          <div style="text-align: center; display: inline-block" *ngFor="let item of filaTrasladosSalientes">
+            <div style="display: inline-block; width:150px;">
+              <span style="color:red">{{item}}</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-12 " style="    border-bottom: 1px solid;border-color: #d4d4d4;">
+          <div style="display: inline-block; width:180px;">
+            <span>
+              <strong>TRASLADOS ENTRANTES</strong>
+            </span>
+          </div>
+          <div style="text-align: center; display: inline-block" *ngFor="let item of filaTrasladosEntrantes">
+            <div style="display: inline-block; width:150px;">
+              <span style="color:forestgreen">{{item}}</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-12 " style="    border-bottom: 1px solid;border-color: #d4d4d4;">
+          <div style="display: inline-block; width:180px;">
+            <span>
+              <strong>SALDO FINAL</strong>
+            </span>
+          </div>
+          <div style="text-align: center; display: inline-block" *ngFor="let item of filaSaldosFinales">
+            <div style="display: inline-block; width:150px;">
+              <span>{{item}}</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-12 " style="    border-bottom: 1px solid;border-color: #d4d4d4;">
+          <div style="display: inline-block; width:180px;">
+            <span>
+              <strong>SALDO REAL EN CAJA</strong>
+            </span>
+          </div>
+          <div style="text-align: center; display: inline-block" *ngFor="let item of filaSaldosReales">
+            <div style="display: inline-block; width:150px;">
+              <span>{{item}}</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-12 " style="    border-bottom: 1px solid;border-color: #d4d4d4;">
+          <div style="display: inline-block; width:180px;">
+            <span>
+              <strong>DIFERENCIA</strong>
+            </span>
+          </div>
+          <div style="text-align: center; display: inline-block" *ngFor="let item of filaSaldosDiferencia">
+            <div style="display: inline-block; width:150px;">
+              <span>{{item}}</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <br>
+      <div class="row" style="margin-top: 20px;">
+        <div class="col-md-12">
+          <button  *ngIf="!esArqueo"  style="margin-right: 10px; background-color: crimson;" type="button" pButton icon="pi pi-times" label="Cancelar Precierre"
+            (click)="cancelarPrecierre()"></button>
+            <button  *ngIf="esArqueo"  style="margin-right: 10px; background-color: crimson;" type="button" pButton icon="pi pi-times" label="Cerrar Arqueo"
+            (click)="cancelarArqueo()"></button>
+          <button *ngIf="!esArqueo"  type="button" pButton icon="pi pi-check" label="Guardar Precierre" (click)="confirmarPrecierre()"></button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</p-dialog>
+
+<div *ngIf="mostrarArqueo">
+  <div *ngFor="let fx of listaFxs">
+    <app-arqueo [fx]="fx.codigo" [show]="fx.mostrar" (PasarDenominaciones)="recibirValor($event)">
+    </app-arqueo>
+  </div>
+</div>
+
+
+
+<p-confirmDialog key="cdRealizarCierre" [header]="getMsg('administration.operacion.confirm.titulo')" icon="fa fa-question-circle" width="425" #cdRealizarCierre>
+  <p-footer>
+    <button type="button" pButton icon="pi pi-times" [label]="getMsg('confirm.button.no')" (click)="cdRealizarCierre.reject()"></button>
+    <button type="button" pButton icon="pi pi-check" [label]="getMsg('confirm.button.yes')" (click)="cdRealizarCierre.accept()"></button>
+  </p-footer>
+</p-confirmDialog>
+
+<p-dialog [(visible)]="mostrarFecha" [contentStyle]="{'height':'400px', 'padding':'15px'}">
+    
+    <div *ngIf="mostrarFecha">
+        <div class="row" >
+          <div class="col-md-12">
+              <input type="date" [ngModel] ="dt" (ngModelChange)="dt = $event" >
+              {{dt| date:'yyyy-MM-dd'}}
+              <button  type="button" pButton icon="pi pi-check" label="Guardar " (click)="realizarCierreFechaAceptar()"></button>
+              
+          </div>
+          
+        </div>
+      </div>
+  </p-dialog>
+  
+  <app-loading-screen></app-loading-screen>
+

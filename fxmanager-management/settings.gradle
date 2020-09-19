@@ -1,0 +1,6 @@
+include 'fxmanager-management-domain', 'fxmanager-management-persistence',  'fxmanager-management-core', 'fxmanager-management-rest', 'fxmanager-auth-domain', 'fxmanager-auth-persistence', 'fxmanager-auth-core','fxmanager-auth-rest'
+project(':fxmanager-auth-rest').projectDir = new File(settingsDir, '../fxmanager-auth/fxmanager-auth-rest')
+project(':fxmanager-auth-core').projectDir = new File(settingsDir, '../fxmanager-auth/fxmanager-auth-core')
+project(':fxmanager-auth-domain').projectDir = new File(settingsDir, '../fxmanager-auth/fxmanager-auth-domain')
+project(':fxmanager-auth-persistence').projectDir = new File(settingsDir, '../fxmanager-auth/fxmanager-auth-persistence')
+

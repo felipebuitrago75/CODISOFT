@@ -1,0 +1,20 @@
+// Here you can add other styles
+body .ui-growl .ui-growl-item-container.ui-growl-message-success {
+    background-color: #73ff73;
+    border: 0 none;
+    color: #212121;
+}
+
+body .ui-growl .ui-growl-item-container.ui-growl-message-error {
+    background-color: #fd4354;
+    border: 0 none;
+    color: #ffffff;
+}
+
+body .ui-growl .ui-growl-item-container.ui-growl-message-error .ui-growl-image {
+    color: #ffffff;
+}
+
+.ui-chips>ul.ui-inputtext{
+    width: 100% !important;
+  }

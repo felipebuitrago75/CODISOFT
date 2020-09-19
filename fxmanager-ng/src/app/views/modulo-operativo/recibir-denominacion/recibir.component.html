@@ -1,0 +1,122 @@
+<div *ngIf="show" class="row contenedor">
+    <div class="row contenedor-denominaciones">
+        <div class="col-md-12">
+            <h3 style="text-align: center;">Seleccione las denominaciones que recibe</h3>
+        </div>
+        <div *ngIf="ready" class="row">
+
+            <div *ngFor="let row of denominaciones" class="col-md-12">
+
+                <div *ngIf="!esCompra" class="col-xs-12" style="">
+                    <div style="margin-bottom: 9px;" class="ui-inputgroup">
+                        <span style="font-size: 13px; width: 50%;" class="ui-inputgroup-addon">{{fxBase}} {{row.valor | currency:' ':'code' }} </span>
+                        <input pKeyFilter="pnum" pInputText [(ngModel)]="row.cantidad" (ngModelChange)="mostrar()" style="width:100%; font-size: 11px"
+                        />
+                        <span style="font-size: 13px; width: 70%;" class="ui-inputgroup-addon">Subtotal:  {{fxBase}} {{ row.cantidad * row.valor | currency:' ':'code' }}</span>
+                    </div>
+                </div>
+                <div *ngIf="esCompra" class="col-xs-12" style="">
+                    <div style="margin-bottom: 9px;" class="ui-inputgroup">
+                        <span style="font-size: 13px; width: 50%; " class="ui-inputgroup-addon"> {{fx}} {{row.valor | currency:' ':'code' }}</span>
+                        <input pKeyFilter="pnum" pInputText [(ngModel)]="row.cantidad" (ngModelChange)="mostrar()" style="width:100%; font-size: 11px"
+                        />
+                        <span style="font-size: 13px; width: 70%;" class="ui-inputgroup-addon"> Subtotal:   {{fx}} {{ row.cantidad * row.valor | currency:' ':'code' }}</span>
+                    </div>
+                </div>
+
+            </div>
+            <br>
+
+            <div class="col-md-12" style="margin-bottom: 10px ">
+                <div style="margin-bottom: 9px; margin-bottom: 9px; border: 2px solid; border-color: #016b94; border-radius: 5px;" class="ui-inputgroup">
+                    <span style="font-size: 14px; width: 60%; " class="ui-inputgroup-addon">TOTAL </span>
+                    <input disabled currencyMask pInputText [(ngModel)]="total" (ngModelChange)="eliminarDenominacion()" style="width:100%; font-size: 13px"
+                    />
+                </div>
+            </div>
+
+            <div *ngIf="esCompra" class="col-md-12" style="margin-bottom: 10px ">
+                <div class="row" style="margin-bottom: 10px;">
+                    <div class="col-md-12">
+
+
+                        <span *ngIf="!correcto" style="width: 100%; font-size: 13px;" class="badge badge-danger float-right">
+                            TOTAL RECIBIDO: {{fx}} {{total | currency }}
+                        </span>
+
+                        <span *ngIf="correcto" style="width: 100%; font-size: 13px;" class="badge badge-success float-right">
+                            TOTAL RECIBIDO: {{fx}} {{total | currency }}
+                        </span>
+
+                    </div>
+                </div>
+                <div class="row" style="margin-bottom: 10px;">
+                    <div class="col-md-12">
+                        <span style="width: 100%; font-size: 13px;" class="badge badge-primary float-right">
+                            TOTAL OPERACIÓN: {{fx}} {{valorTotal | currency }}
+                        </span>
+                    </div>
+                </div>
+                <div class="row" style="margin-bottom: 10px;">
+                    <div class="col-md-12">
+
+                        <span *ngIf="diferencia>0" style="width: 100%; font-size: 13px;" class="badge badge-danger float-right">
+                            SOBRA : {{fx}} {{diferencia | currency }}
+                        </span>
+
+                        <span *ngIf="diferencia<0" style="width: 100%; font-size: 13px;" class="badge badge-danger float-right">
+                            FALTA : {{fx}} {{diferencia | currency}}
+                        </span>
+
+                    </div>
+                </div>
+            </div>
+
+            <div *ngIf="!esCompra" class="col-md-12" style="margin-bottom: 10px ">
+                <div class="row" style="margin-bottom: 10px;">
+                    <div class="col-md-12">
+
+                        <span *ngIf="!correcto" style="width: 100%; font-size: 13px;" class="badge badge-danger float-right">
+                            TOTAL RECIBIDO: COP {{total | currency }}
+                        </span>
+
+                        <span *ngIf="correcto" style="width: 100%; font-size: 13px;" class="badge badge-success float-right">
+                            TOTAL RECIBIDO: COP {{total | currency}}
+                        </span>
+                    </div>
+                </div>
+                <div class="row" style="margin-bottom: 10px;">
+                    <div class="col-md-12">
+
+                        <span style="width: 100%; font-size: 13px;" class="badge badge-primary float-right">
+                            TOTAL OPERACIÓN: COP {{valorTotal | currency }}
+                        </span>
+
+                    </div>
+                </div>
+                <div class="row" style="margin-bottom: 10px;">
+                    <div class="col-md-12">
+
+                        <span *ngIf="diferencia>0" style="width: 100%; font-size: 13px;" class="badge badge-danger float-right">
+                            SOBRA : COP {{diferencia | currency }}
+                        </span>
+
+                        <span *ngIf="diferencia<0" style="width: 100%; font-size: 13px;" class="badge badge-danger float-right">
+                            FALTA : COP {{diferencia | currency}}
+                        </span>
+
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group col-md-12  form-actions">
+                <br/>
+                <button (click)="cancelar($event)" type="button" class="btn btn-sm btn-danger float-left btn-primary-spacing">Cancelar operacion</button>
+
+                <button [disabled]="!correcto" (click)="lanzar($event)" type="button" class="btn btn-sm btn-primary float-right btn-primary-spacing">Siguiente</button>
+               
+            </div>
+        </div>
+    </div>
+</div>

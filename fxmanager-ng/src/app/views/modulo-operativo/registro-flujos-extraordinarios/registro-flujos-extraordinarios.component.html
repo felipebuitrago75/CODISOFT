@@ -1,0 +1,178 @@
+<div class="animated fadeIn">
+  <!-- Nav tabs -->
+  <h4>FLUJOS EXTRAORDINARIOS</h4>
+  <br>
+  <p-card>
+    <div class="row">
+      <div class="col-md-12">
+
+        <div class="row">
+          <div class="form-group col-md-3">
+            <label class="form-control-label">ID </label>
+            <div class="controls">
+              <div class="input-prepend input-group">
+                <input [(ngModel)]="flujoExtraordinario.id" disabled pInputText class="form-control" size="16" type="text">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+
+
+        </div>
+        <div class="row">
+          <div class="form-group col-md-6">
+            <label class="form-control-label">Tipo</label>
+            <p-dropdown autoWidth="false" [style]="{'width':'100%'}" [(ngModel)]="flujoExtraordinario.tipo" [options]="listaTipoFlujos">
+            </p-dropdown>
+          </div>
+          <div class="col-md-6 col-form-label">
+            <label class="form-control-label">CHK</label>
+            <div class="form-check">
+              <p-inputSwitch [(ngModel)]="checked"></p-inputSwitch>
+            </div>
+          </div>
+          <div *ngIf="checked" class="form-group col-md-3">
+            <label class="form-control-label">ID Soipc</label>
+            <div class="controls">
+              <div class="input-prepend input-group">
+                <input [(ngModel)]="flujoExtraordinario.idSoipc" pInputText class="form-control" size="16" type="text">
+              </div>
+            </div>
+          </div>
+
+          <div *ngIf="checked" class="form-group col-md-3">
+            <label class="form-control-label">Fecha</label>
+            <div class="controls">
+              <p-calendar [(ngModel)]="fecha" [locale]="calendarLanguage" dateFormat="dd/mm/yy"></p-calendar>
+
+            </div>
+          </div>
+
+          <div *ngIf="checked" class="form-group col-md-3">
+            <label class="form-control-label">Empresa</label>
+            <div class="controls">
+              <div class="input-prepend input-group">
+                <input [(ngModel)]="empresa" pInputText class="form-control" size="16" type="text">
+              </div>
+            </div>
+          </div>
+
+          <div *ngIf="checked" class="form-group col-md-3">
+            <label class="form-control-label">Nit</label>
+            <div class="controls">
+              <div class="input-prepend input-group">
+                <input [(ngModel)]="nit" pInputText class="form-control" size="16" type="text">
+              </div>
+            </div>
+          </div>
+
+          <div *ngIf="checked" class="form-group col-md-3">
+            <label class="form-control-label">Operador</label>
+            <div class="controls">
+              <div class="input-prepend input-group">
+                <input [(ngModel)]="operador" pInputText class="form-control" size="16" type="text">
+              </div>
+            </div>
+          </div>
+
+          <div *ngIf="checked" class="form-group col-md-3">
+            <label class="form-control-label">Beneficiario</label>
+            <div class="controls">
+              <div class="input-prepend input-group">
+                <input [(ngModel)]="beneficiario" pInputText class="form-control" size="16" type="text">
+              </div>
+            </div>
+          </div>
+
+          <div  class="form-group col-md-12">
+            
+          </div>
+          <div class="form-group col-md-6">
+            <label class="form-control-label">Naturaleza</label>
+            <p-dropdown autoWidth="false" [style]="{'width':'100%'}" [options]="listaNaturaleza" [(ngModel)]="flujoExtraordinario.naturaleza" (onChange)="cambioNaturaleza($event)">
+            </p-dropdown>
+          </div>
+          <div class="form-group col-md-6">
+            <label class="form-control-label">Criterio</label>
+            <p-dropdown autoWidth="false" [style]="{'width':'100%'}" [options]="listaCriterios" [(ngModel)]="flujoExtraordinario.criterio">
+            </p-dropdown>
+          </div>
+
+          <div class="form-group col-md-6">
+            <label class="form-control-label">Receptor</label>
+            <p-dropdown autoWidth="false" [style]="{'width':'100%'}" [options]="listaReceptores" [(ngModel)]="flujoExtraordinario.receptor">
+            </p-dropdown>
+          </div>
+
+          <div class="form-group col-md-6">
+            <label class="form-control-label">Cuenta</label>
+            <div class="controls">
+              <div class="input-prepend input-group">
+                <input  pKeyFilter="pnum"  [(ngModel)]="flujoExtraordinario.cuenta" pInputText class="form-control" size="16" type="text">
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group col-md-6">
+            <label class="form-control-label">Concepto</label>
+            <div class="controls">
+              <div class="input-prepend input-group">
+                <input [(ngModel)]="flujoExtraordinario.concepto" pInputText class="form-control" size="16" type="text">
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group col-md-6">
+            <label class="form-control-label">Moneda</label>
+            <p-dropdown autoWidth="false" [style]="{'width':'100%'}" [options]="listaFxs" [(ngModel)]="flujoExtraordinario.fx" optionLabel="codigo">
+            </p-dropdown>
+          </div>
+          <div class="form-group col-md-6">
+              <div class="row">
+                  <div class="col-md-12">
+                    <label class="form-control-label">Valor</label>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="controls">
+                      <div class="input-prepend input-group">
+                        <button (click)="mostrarArqueoFuncion()" type="button" class="btn btn-sm btn-success btn-success-spacing">Definir valor giro</button>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <h4>{{flujoExtraordinario.valor | currency }}</h4>
+                  </div>
+                </div>
+          </div>
+          <div class="form-group col-md-12">
+            <label class="form-control-label">Descripcion</label>
+            <div class="controls">
+              <div class="input-prepend input-group">
+                <textarea [(ngModel)]="flujoExtraordinario.descripcion" style="border: 1px solid; " class="form-control" size="16" type="text"></textarea>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-group col-md-12  form-actions">
+            <br/>
+            <button (click)="validate()" type="button" class="btn btn-sm btn-success float-right btn-success-spacing">Guardar</button>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </p-card>
+</div>
+<p-confirmDialog key="cdRegistroFlujo"  [header]="getMsg('administration.confirm.titulo')" icon="fa fa-question-circle" width="425" #cdRegistroFlujo>
+  <p-footer>
+    <button type="button" pButton icon="pi pi-times" [label]="getMsg('confirm.button.no')" (click)="cdRegistroFlujo.reject()"></button>
+    <button type="button" pButton icon="pi pi-check" [label]="getMsg('confirm.button.yes')" (click)="cdRegistroFlujo.accept()"></button>
+  </p-footer>
+</p-confirmDialog>
+
+<div *ngIf="mostrarArqueo">
+    <app-arqueo [fx]="flujoExtraordinario.fx.codigo" [show]="mostrarArqueo" (PasarDenominaciones)="recibirValor($event)">
+    </app-arqueo>
+  </div>

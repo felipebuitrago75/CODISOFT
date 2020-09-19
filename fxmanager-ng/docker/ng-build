@@ -1,0 +1,6 @@
+cd ../ && ng build --prod
+rm -rf ./docker/dist
+cp -r ./dist ./docker
+cd ./docker  && docker build -t fxmanager-ng .
+rm -rf ./dist
+

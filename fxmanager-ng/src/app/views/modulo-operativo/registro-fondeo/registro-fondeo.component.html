@@ -1,0 +1,89 @@
+<div class="animated fadeIn">
+  <!-- Nav tabs -->
+  <h4>FONDEOS</h4>
+  <br>
+  <p-card>
+    <div class="row">
+      <div class="col-md-12">
+
+        <div class="row">
+          <div class="form-group col-md-3">
+            <label class="form-control-label">ID </label>
+            <div class="controls">
+              <div class="input-prepend input-group">
+                <input disabled [(ngModel)]="fondeo.id" pInputText class="form-control" size="16" type="text">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+
+          <div class="form-group col-md-6">
+            <label class="form-control-label">COD Turno Destino</label>
+
+            <p-dropdown autoWidth="false" [style]="{'width':'100%'}" [options]="listaTurnosDestino" [(ngModel)]="fondeo.turnoDestino"
+              optionLabel="id">
+            </p-dropdown>
+
+          </div>
+
+          <div class="form-group col-md-6">
+            <label class="form-control-label">Moneda</label>
+            <p-dropdown autoWidth="false" [style]="{'width':'100%'}" [options]="listaFxs" [(ngModel)]="fondeo.fx" optionLabel="codigo">
+            </p-dropdown>
+          </div>
+
+        </div>
+        <div class="row">
+
+          <div class="form-group col-md-6">
+            <div class="row">
+              <div class="col-md-12">
+                <label class="form-control-label">Valor Giro</label>
+              </div>
+              <div class="col-md-6">
+                <div class="controls">
+                  <div class="input-prepend input-group">
+                    <button (click)="mostrarArqueoFuncion()" type="button" class="btn btn-sm btn-success btn-success-spacing">Definir denominaciones giro</button>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <h4>{{fondeo.valorGiro | currency }}</h4>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="form-group col-md-12  form-actions">
+            <br/>
+            <button (click)="validate()" type="button" class="btn btn-sm btn-success float-right btn-success-spacing">Guardar</button>
+            <button (click)="clean()" type="button" class="btn btn-sm btn-default float-right btn-primary-spacing">Limpiar</button>
+
+          </div>
+        </div>
+
+
+      </div>
+
+
+
+    </div>
+
+
+  </p-card>
+</div>
+
+
+<p-confirmDialog [header]="getMsg('administration.confirm.titulo')" icon="fa fa-question-circle" width="425" #cd>
+  <p-footer>
+    <button type="button" pButton icon="pi pi-times" [label]="getMsg('confirm.button.no')" (click)="cd.reject()"></button>
+    <button type="button" pButton icon="pi pi-check" [label]="getMsg('confirm.button.yes')" (click)="cd.accept()"></button>
+  </p-footer>
+</p-confirmDialog>
+
+<div *ngIf="mostrarArqueo">
+  <app-arqueo [fx]="fondeo.fx.codigo" [show]="mostrarArqueo" (PasarDenominaciones)="recibirValor($event)">
+  </app-arqueo>
+</div>

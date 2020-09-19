@@ -1,0 +1,74 @@
+buildscript {
+  repositories {
+    maven {
+      url "https://plugins.gradle.org/m2/"
+    }
+  }
+  dependencies {
+    classpath "io.franzbecker:gradle-lombok:1.14"
+  }
+}
+
+apply plugin: "io.franzbecker.gradle-lombok"
+apply plugin: 'java'
+apply plugin: "maven-publish"
+
+group = 'co.com.smartcode'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = 11
+
+repositories {
+	mavenLocal()
+    jcenter()
+}
+
+dependencies {
+	implementation project(':fxmanager-auth-domain')
+	implementation project(':fxmanager-auth-persistence')
+	
+	
+	compileOnly('org.springframework.boot:spring-boot-starter-security:+')
+	compileOnly('org.springframework.security.oauth:spring-security-oauth2:2.3.3.RELEASE')
+	compileOnly('org.springframework.security:spring-security-jwt:1.0.9.RELEASE')
+	compileOnly('javax.servlet:javax.servlet-api:3.0.1')
+	compileOnly("org.springframework:spring-context:+");
+	compileOnly('org.springframework.boot:spring-boot-starter-webflux:+')
+	testCompile("org.junit.jupiter:junit-jupiter-api:5.1.0") 
+    testRuntime("org.junit.jupiter:junit-jupiter-engine:5.1.0")
+}
+
+lombok {
+	version = '1.18.2'
+	sha256 = ""
+}
+
+task sourcesJar(type: Jar, dependsOn: classes) {
+    classifier = 'sources'
+    from sourceSets.main.allSource
+}
+
+javadoc.failOnError = false
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+
+artifacts {
+    archives sourcesJar
+    archives javadocJar
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+            artifact sourcesJar {
+                classifier "sources"
+            }
+            artifact javadocJar {
+                classifier "javadoc"
+            }
+        }
+    }
+}
+

@@ -1,0 +1,198 @@
+<div class="animated fadeIn">
+  <!--/.row-->
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="card" style="overflow: scroll" >
+        <div class="card-header">
+          <strong>Precierre</strong>
+
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="form-group col-md-12">
+              <div class="row" style="width: 3000px; padding: 20px;">
+                <div *ngIf="precierre" class="col-md-12">
+                  <div class="row" style="margin-bottom: 40px;">
+                    <div class="col-md-12">
+                      <h4>REPORTE HISTORICO DE ARQUEO</h4>
+                      <h4>
+                        <small>INTERAMERICAN MONEY</small>
+                      </h4>
+                      <p>
+                        <strong>FECHA: {{precierre.fecha | date: 'dd/MM/yyyy-HH:mm:ss'}}</strong>
+                      </p>
+                      <p>
+                        <strong>ID USUARIO: {{precierre.turno.idUsuario}}</strong>
+                      </p>
+                      <p>
+                        <strong>ID CAJA: {{precierre.turno.idCaja}}</strong>
+                      </p>
+          
+                    </div>
+                  </div>
+            
+                  <div class="row">
+            
+                    <div class="col-md-12 " style="    border-bottom: 1px solid;border-color: #d4d4d4;">
+                      <div style="display: inline-block; width:180px;">
+                        <span>
+                          <strong>MONEDA</strong>
+                        </span>
+                      </div>
+            
+                      <div style="text-align: center; display: inline-block" *ngFor="let item of filaMonedas">
+                        <div style="display: inline-block; width:150px;">
+                          <div style="display: inline-block; width:150px;">
+                            <span>{{item.codigo}}</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+            
+                    <div class="col-md-12 " style="    border-bottom: 1px solid;border-color: #d4d4d4;">
+                      <div style="display: inline-block; width:180px;">
+                        <span>
+                          <strong>SALDO INICIAL</strong>
+                        </span>
+                      </div>
+                      <div style="text-align: center; display: inline-block" *ngFor="let item of filaSaldoInicial">
+                        <div style="display: inline-block; width:150px;">
+                          <span>{{item}}</span>
+                        </div>
+                      </div>
+                    </div>
+            
+                    <div class="col-md-12 " style="    border-bottom: 1px solid;border-color: #d4d4d4;">
+                      <div style="display: inline-block; width:180px;">
+                        <span>
+                          <strong>COMPRAS</strong>
+                        </span>
+                      </div>
+                      <div style="text-align: center; display: inline-block" *ngFor="let item of filaCompras">
+                        <div style="display: inline-block; width:150px;">
+                          <span style="color:forestgreen">{{item}}</span>
+                        </div>
+                      </div>
+                    </div>
+            
+                    <div class="col-md-12 " style="    border-bottom: 1px solid;border-color: #d4d4d4;">
+                      <div style="display: inline-block; width:180px;">
+                        <span>
+                          <strong>VENTAS</strong>
+                        </span>
+                      </div>
+                      <div style="text-align: center; display: inline-block" *ngFor="let item of filaVentas">
+                        <div style="display: inline-block; width:150px;">
+                          <span style="color:red">{{item}}</span>
+                        </div>
+                      </div>
+                    </div>
+            
+                    <div class="col-md-12 " style="    border-bottom: 1px solid;border-color: #d4d4d4;">
+                      <div style="display: inline-block; width:180px;">
+                        <span>
+                          <strong>INGRESOS</strong>
+                        </span>
+                      </div>
+                      <div style="text-align: center; display: inline-block" *ngFor="let item of filaIngresos">
+                        <div style="display: inline-block; width:150px;">
+                          <span style="color:forestgreen">{{item}}</span>
+                        </div>
+                      </div>
+                    </div>
+            
+                    <div class="col-md-12 " style="    border-bottom: 1px solid;border-color: #d4d4d4;">
+                      <div style="display: inline-block; width:180px;">
+                        <span>
+                          <strong>EGRESOS</strong>
+                        </span>
+                      </div>
+                      <div style="text-align: center; display: inline-block" *ngFor="let item of filaEgresos">
+                        <div style="display: inline-block; width:150px;">
+                          <span style="color:red">{{item}}</span>
+                        </div>
+                      </div>
+                    </div>
+            
+                    <div class="col-md-12 " style="    border-bottom: 1px solid;border-color: #d4d4d4;">
+                      <div style="display: inline-block; width:180px;">
+                        <span>
+                          <strong>TRASLADOS SALIENTES</strong>
+                        </span>
+                      </div>
+                      <div style="text-align: center; display: inline-block" *ngFor="let item of filaTrasladosSalientes">
+                        <div style="display: inline-block; width:150px;">
+                          <span style="color:red">{{item}}</span>
+                        </div>
+                      </div>
+                    </div>
+            
+                    <div class="col-md-12 " style="    border-bottom: 1px solid;border-color: #d4d4d4;">
+                      <div style="display: inline-block; width:180px;">
+                        <span>
+                          <strong>TRASLADOS ENTRANTES</strong>
+                        </span>
+                      </div>
+                      <div style="text-align: center; display: inline-block" *ngFor="let item of filaTrasladosEntrantes">
+                        <div style="display: inline-block; width:150px;">
+                          <span style="color:forestgreen">{{item}}</span>
+                        </div>
+                      </div>
+                    </div>
+            
+                    <div class="col-md-12 " style="    border-bottom: 1px solid;border-color: #d4d4d4;">
+                      <div style="display: inline-block; width:180px;">
+                        <span>
+                          <strong>SALDO FINAL</strong>
+                        </span>
+                      </div>
+                      <div style="text-align: center; display: inline-block" *ngFor="let item of filaSaldosFinales">
+                        <div style="display: inline-block; width:150px;">
+                          <span>{{item}}</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="col-md-12 " style="    border-bottom: 1px solid;border-color: #d4d4d4;">
+                      <div style="display: inline-block; width:180px;">
+                        <span>
+                          <strong>SALDO REAL EN CAJA</strong>
+                        </span>
+                      </div>
+                      <div style="text-align: center; display: inline-block" *ngFor="let item of filaSaldosReales">
+                        <div style="display: inline-block; width:150px;">
+                          <span>{{item}}</span>
+                        </div>
+                      </div>
+                    </div>
+            
+                    <div class="col-md-12 " style="    border-bottom: 1px solid;border-color: #d4d4d4;">
+                      <div style="display: inline-block; width:180px;">
+                        <span>
+                          <strong>DIFERENCIA</strong>
+                        </span>
+                      </div>
+                      <div style="text-align: center; display: inline-block" *ngFor="let item of filaSaldosDiferencia">
+                        <div style="display: inline-block; width:150px;">
+                          <span>{{item}}</span>
+                        </div>
+                      </div>
+                    </div>
+            
+            
+                  </div>
+                  <br>
+                  
+            
+                </div>
+              </div>
+
+              <button type="button" (click)="volver()" class="btn btn-sm btn-primary float-right btn-primary-spacing">{{'Volver'}}</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!--/.col-->
+    </div>
+  </div>
+

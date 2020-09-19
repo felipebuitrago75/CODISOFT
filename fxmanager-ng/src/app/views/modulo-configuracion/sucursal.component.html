@@ -1,0 +1,186 @@
+<div class="animated fadeIn">
+
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-header">
+          <strong>Nueva Sucursal</strong>
+        </div>
+        <div class="card-body">
+
+          <div class="row">
+            <div class="col-md-12">
+
+              <div class="row">
+                <div class="form-group col-md-2">
+                  <label class="form-control-label">Codigo</label>
+                  <div class="controls">
+                    <div class="input-prepend input-group">
+                      <input [(ngModel)]="sucursal.cod" pInputText class="form-control" size="45" type="text">
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group col-md-6">
+                  <label class="form-control-label">Nombre </label>
+                  <div class="controls">
+                    <div class="input-prepend input-group">
+                      <input [(ngModel)]="sucursal.nombre" pInputText class="form-control" size="45" type="text">
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group col-md-4">
+                  <label class="form-control-label">Estado</label>
+                  <p-dropdown autoWidth="false" [style]="{'width':'100%'}" [options]="listaEstados" [(ngModel)]="sucursal.estado">
+                  </p-dropdown>
+                </div>
+                <div class="col-md-2 col-form-label">
+                  <label class="form-control-label">Sede Principal</label>
+                  <div class="form-check">
+                    <input [(ngModel)]="sucursal.chkPrincipal" class="form-check-input" id="checkbox1" value="1" type="checkbox">
+                    <label class="form-check-label" for="checkbox1"> </label>
+                  </div>
+                </div>
+                <div class="form-group col-md-10">
+                  <label class="form-control-label">Telefonos</label>
+                  <div class="controls">
+                    <div class="input-prepend input-group">
+                      <p-chips  [style]="{'width':'100%'}" class="ui-chips-100" styleClass="ui-chips-100" inputStyleClass="ui-chips-100" [allowDuplicate]="false" [(ngModel)]="telefonos"></p-chips>
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="form-group col-md-6">
+                  <label class="form-control-label">Dirección</label>
+                  <div class="controls">
+                    <div class="input-prepend input-group">
+                      <input [(ngModel)]="sucursal.direccion" pInputText class="form-control" size="45" type="text">
+                    </div>
+                  </div>
+                </div>
+                
+              </div>
+              <div class="row">
+
+              </div>
+              <div class="row">
+                <div class="form-group col-md-12  form-actions">
+                  <br/>
+                  <button (click)="validate()" type="button" class="btn btn-sm btn-success float-right btn-success-spacing">Guardar</button>
+                  <button (click)="clean()" type="button" class="btn btn-sm btn-default float-right btn-primary-spacing">Limpiar</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-header">
+          <strong>Lista de precios</strong>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="row">
+                <div class="form-group col-md-2">
+                  <label class="form-control-label">Moneda</label>
+                  <p-dropdown autoWidth="false" [style]="{'width':'100%'}" [options]="listaFxs" [(ngModel)]="fxSucursalDTO.fx" optionLabel="codigo"></p-dropdown>
+                </div>
+                
+                <div class="form-group col-md-3">
+                  <label class="form-control-label">Precio compra</label>
+                  <div class="controls">
+                    <div class="input-prepend input-group">
+                      <input [(ngModel)]="fxSucursalDTO.precioCompra" currencyMask style="border: 1px solid;" class="form-control" size="16" type="text">
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group col-md-3">
+                  <label class="form-control-label">Precio venta</label>
+                  <div class="controls">
+                    <div class="input-prepend input-group">
+                      <input [(ngModel)]="fxSucursalDTO.precioVenta" currencyMask style="border: 1px solid;" class="form-control" size="16" type="text">
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group col-md-3">
+                  <label class="form-control-label">Precio valorización</label>
+                  <div class="controls">
+                    <div class="input-prepend input-group">
+                      <input [(ngModel)]="fxSucursalDTO.precioValoracion" currencyMask style="border: 1px solid;" class="form-control" size="16"
+                        type="text">
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="form-group col-md-12  form-actions">
+                  <br/>
+                  <button (click)="validateCrearPrecio()" type="button" class="btn btn-sm btn-success float-right btn-success-spacing">Crear</button>
+                  <button (click)="cleanCreacionPrecio()" type="button" class="btn btn-sm btn-default float-right btn-primary-spacing">Limpiar</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group col-md-12">
+              <p-table [contextMenu]="contextMenu" [value]="listaPrecios" selectionMode="single" [(selection)]="rowSelected" contextMenuSelectionMode="joint"
+                dataKey="fx.codigo">
+                <ng-template pTemplate="header">
+                  <tr>
+                    <th style="width:10%; font-size: 12px">Codigo Moneda</th>
+                   
+                    <th style="width:30%; font-size: 12px">Precio compra</th>
+                    <th style="width:30%; font-size: 12px">Precio venta</th>
+                    <th style="width:30%; font-size: 12px">Precio valorizacion</th>
+                  </tr>
+                </ng-template>
+
+                <ng-template pTemplate="body" let-listaPrecios>
+                  <tr [pSelectableRow]="listaPrecios" [pContextMenuRow]="listaPrecios">
+                    <td style="font-size: 11px">{{listaPrecios.fx.codigo}}</td>
+                    <td pEditableColumn style="font-size: 11px">
+                      <p-cellEditor>
+                        <ng-template pTemplate="input">
+                          <input pInputText type="text" [(ngModel)]="listaPrecios.precioCompra">
+                        </ng-template>
+                        <ng-template pTemplate="output">
+                          {{listaPrecios.precioCompra | currency }}
+                        </ng-template>
+                      </p-cellEditor>
+                    </td>
+                    <td pEditableColumn style="font-size: 11px">
+                      <p-cellEditor>
+                        <ng-template pTemplate="input">
+                          <input pInputText type="text" [(ngModel)]="listaPrecios.precioVenta">
+                        </ng-template>
+                        <ng-template pTemplate="output">
+                          {{listaPrecios.precioVenta | currency }}
+                        </ng-template>
+                      </p-cellEditor>
+                    </td>
+                    <td pEditableColumn style="font-size: 11px">
+                      <p-cellEditor>
+                        <ng-template pTemplate="input">
+                          <input pInputText type="text" [(ngModel)]="listaPrecios.precioValoracion">
+                        </ng-template>
+                        <ng-template pTemplate="output">
+                          {{listaPrecios.precioValoracion | currency }}
+                        </ng-template>
+                      </p-cellEditor>
+                    </td>
+                  </tr>
+                </ng-template>
+              </p-table>
+             
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <p-contextMenu #contextMenu [model]="tableActions"></p-contextMenu>
+  </div>

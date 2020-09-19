@@ -1,0 +1,105 @@
+<div class="animated fadeIn">
+  <!-- Nav tabs -->
+  <h4>TRASLADOS</h4>
+  <br>
+  <p-card>
+    <div class="row">
+      <div class="col-md-12">
+
+        <div class="row">
+          <div class="form-group col-md-3">
+            <label class="form-control-label">ID </label>
+            <div class="controls">
+              <div class="input-prepend input-group">
+                <input disabled [(ngModel)]="traslado.id" pInputText class="form-control" size="16" type="text">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+
+          <div class="form-group col-md-12">
+            <label class="form-control-label">Sucursal Destino</label>
+
+            <p-dropdown autoWidth="false" [style]="{'width':'100%'}" [options]="listaSucursalesDestino" [(ngModel)]="traslado.sucursalDestino"
+              optionLabel="nombre">
+            </p-dropdown>
+
+          </div>
+
+        </div>
+        <div class="row">
+          <div class="form-group col-md-6">
+            <label class="form-control-label">Moneda</label>
+            <p-dropdown  (onChange)="cambioTipo($event)" autoWidth="false" [style]="{'width':'100%'}" [options]="listaFxs" [(ngModel)]="traslado.fx" optionLabel="codigo">
+            </p-dropdown>
+          </div>
+          <div class="form-group col-md-6">
+            <label class="form-control-label">Tipo Translado</label>
+            <p-dropdown [disabled]="!activarCampoTipoTraslado" autoWidth="false" [style]="{'width':'100%'}" [options]="listaTipos" [(ngModel)]="traslado.tipoTraslado" (onChange)="cambioTipo($event)">
+            </p-dropdown>
+          </div>
+        </div>
+        <div class="row">
+
+          <div class="form-group col-md-6">
+            <label class="form-control-label">Precio Transferencia</label>
+            <div class="controls">
+              <div class="input-prepend input-group">
+                <input [disabled]="!activarCampo" [(ngModel)]="traslado.precioTraslado" currencyMask style=" height: 45px; font-size: medium; border: 2px solid; border-color: #4dbd74"
+                  pInputText class="form-control" size="16" type="text">
+              </div>
+            </div>
+          </div>
+          <div class="form-group col-md-6">
+            <div class="row">
+              <div class="col-md-12">
+                <label class="form-control-label">Valor Giro</label>
+              </div>
+              <div class="col-md-6">
+                <div class="controls">
+                  <div class="input-prepend input-group">
+                    <button (click)="mostrarArqueoFuncion()" type="button" class="btn btn-sm btn-success btn-success-spacing">Definir valor giro</button>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <h4>{{traslado.valorGiro | currency }}</h4>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="row">
+          <div class="form-group col-md-12  form-actions">
+            <br/>
+            <button (click)="validate()" type="button" class="btn btn-sm btn-success float-right btn-success-spacing">Guardar</button>
+            <button (click)="clean()" type="button" class="btn btn-sm btn-default float-right btn-primary-spacing">Limpiar</button>
+
+          </div>
+        </div>
+
+
+      </div>
+
+
+
+    </div>
+
+
+  </p-card>
+</div>
+
+
+<p-confirmDialog [header]="getMsg('administration.confirm.titulo')" icon="fa fa-question-circle" width="425" #cd>
+  <p-footer>
+    <button type="button" pButton icon="pi pi-times" [label]="getMsg('confirm.button.no')" (click)="cd.reject()"></button>
+    <button type="button" pButton icon="pi pi-check" [label]="getMsg('confirm.button.yes')" (click)="cd.accept()"></button>
+  </p-footer>
+</p-confirmDialog>
+
+<div *ngIf="mostrarArqueo">
+    <app-arqueo [fx]="traslado.fx.codigo" [show]="mostrarArqueo" (PasarDenominaciones)="recibirValor($event)">
+    </app-arqueo>
+  </div>

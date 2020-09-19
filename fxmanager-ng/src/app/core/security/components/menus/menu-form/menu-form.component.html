@@ -1,0 +1,72 @@
+﻿<div class="animated fadeIn">
+  <div class="row">
+      <div class="col-lg-12">
+          <div class="card">
+              <div class="card-header">
+                  <strong>{{getMsg('administration.menu.form.title')}}</strong>
+              </div>
+              <div class="card-body">
+                  <div class="row">
+
+                      <div class="form-group col-md-6">
+                          <label class="form-control-label">{{getMsg('administration.menu.form.input.name')}}</label>
+                          <div class="controls">
+                              <div class="input-prepend input-group">                                     
+                                 <input [(ngModel)]="bean.name" pInputText class="form-control" size="16" type="text">
+                              </div>
+                          </div>
+                      </div>
+
+                      <div class="form-group col-md-6">
+                        <label class="form-control-label">{{getMsg('administration.menu.form.input.index')}}</label>
+                        <div class="controls">
+                            <div class="input-prepend input-group">                                     
+                               <input [(ngModel)]="bean.index" pInputText class="form-control" size="16" type="text">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group col-md-6">
+                        <label class="form-control-label">{{getMsg('administration.menu.form.input.parent')}}</label>
+                        <div class="controls">
+                            
+                            <div class="input-prepend input-group">  
+                                <p-dropdown autoWidth="false" [style]="{'width':'100%'}" [options]="menus" [(ngModel)]="bean.parent"
+                                optionLabel="name" placeholder="{{getMsg('administration.menu.form.input.parent.placeholder')}}">
+                                </p-dropdown>                                   
+                               
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group col-md-6">
+                        <label class="form-control-label">{{getMsg('administration.menu.form.input.target')}}</label>
+                        <div class="controls">
+                            <div class="input-prepend input-group">                                     
+                               <input [(ngModel)]="bean.target" pInputText class="form-control" size="16" type="text">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group col-md-12">
+                        <label class="form-control-label">{{getMsg('administration.menu.form.input.description')}}</label>
+                        <div class="controls">
+                            <div class="input-prepend input-group">                                     
+                               <input [(ngModel)]="bean.description" pInputText class="form-control" size="16" type="text">
+                            </div>
+                        </div>
+                    </div>
+
+                      <div class="form-group col-md-12  form-actions">
+                          <br/>
+                          <button type="button" (click)="clean()" class="btn btn-sm btn-default float-right btn-primary-spacing">{{getMsg('baseform.actions.button.clean')}}</button>
+                          <button type="button" (click)="submit()" class="btn btn-sm btn-primary float-right btn-primary-spacing">{{getMsg('baseform.actions.button.save')}}</button>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+      <!--/.col-->
+  </div>
+  <!--/.row-->
+</div>

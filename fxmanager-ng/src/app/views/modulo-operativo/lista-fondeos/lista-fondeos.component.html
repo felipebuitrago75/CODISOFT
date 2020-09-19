@@ -1,0 +1,68 @@
+<div class="animated fadeIn">
+
+  <!--/.row-->
+  <p-contextMenu #cm [model]="tableActions"></p-contextMenu>
+
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-header">
+          <strong>{{getMsg('administration.role.search.table.title')}}</strong>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="form-group col-md-12">
+              <p-table [contextMenu]="contextMenu" [value]="rows" selectionMode="single" [(selection)]="rowSelected" contextMenuSelectionMode="joint"
+                dataKey="id">
+                <ng-template pTemplate="header">
+                  <tr>
+                    <th style="width:10%; font-size: 12px">Id</th>
+                    <th style="width:15%; font-size: 12px">Fecha</th>
+                    <th style="width:10%; font-size: 12px">Moneda</th>
+                    <th style="width:15%; font-size: 12px">Cod turno origen</th>
+                    <th style="width:15%; font-size: 12px">Cod turno destino</th>
+                    <th style="width:35%; font-size: 12px">Valor giro</th>
+
+                  </tr>
+                </ng-template>
+
+                <ng-template pTemplate="body" let-fondeo>
+                  <tr [pSelectableRow]="fondeo" [pContextMenuRow]="fondeo">
+                    <td style="font-size: 11px">{{fondeo.id}}</td>
+                    <td style="font-size: 11px">{{fondeo.fecha | date: 'dd/MM/yyyy-HH:mm:ss'}}</td>
+            
+                    <td style="font-size: 11px">{{fondeo.fx.codigo}}</td>
+                    <td style="font-size: 11px">{{fondeo.turnoOrigen.id}}</td>
+                    <td style="font-size: 11px">{{fondeo.turnoDestino.id}}</td>
+
+  
+                    <td style="font-size: 11px">{{fondeo.valorGiro | currency}}</td>
+
+                  </tr>
+                </ng-template>
+              </p-table>
+              <span [hidden]="!hasNext" class="fake-link link-next-rows" (click)="onLazyLoad(null)">{{getMsg('basecrud.table.link.next',maxRows)}}</span>
+              <div style="visibility: hidden;">
+                <p-dataScroller [value]="" [rows]="maxRows" [totalRecords]="totalRecords" [lazy]="true" (onLazyLoad)="onLazyLoad($event)">
+                  <ng-template let-car pTemplate="item">
+
+                  </ng-template>
+                </p-dataScroller>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <p-contextMenu #contextMenu [model]="tableActions"></p-contextMenu>
+
+    <p-confirmDialog [header]="getMsg('basecrud.confirm.delete.title')" icon="fa fa-question-circle" width="425" #cd>
+      <p-footer>
+        <button type="button" pButton icon="fa-close" [label]="getMsg('confirm.button.no')" (click)="cd.reject()"></button>
+        <button type="button" pButton icon="fa-check" [label]="getMsg('confirm.button.yes')" (click)="cd.accept()"></button>
+      </p-footer>
+    </p-confirmDialog>
+
+    <!--/.col-->
+  </div>
+</div>

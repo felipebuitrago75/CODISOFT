@@ -1,0 +1,10 @@
+subprojects {
+    apply plugin: 'eclipse'
+    apply plugin: 'java'
+
+    repositories {
+        mavenLocal()
+        jcenter()
+    }
+
+}

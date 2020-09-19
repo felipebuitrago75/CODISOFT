@@ -1,0 +1,181 @@
+
+<div  class="animated fadeIn">
+  <div class="row">
+    <div class="col-md-12">
+      <h4>OPERACIONES</h4>
+      <br>
+      <!-- Nav tabs -->
+
+      <p-tabView  (onChange)="cargarLimpiar($event)">
+        <p-tabPanel header="COMPRA">
+          <div class="container-fluid" style="background-color: #dcffed;">
+            <div class="row">
+              <div class="form-group col-md-3">
+                <label class="form-control-label">Moneda</label>
+                <p-dropdown (onChange)="cargarPrecioCompraFx()" autoWidth="false" [style]="{'width':'100%'}" [options]="listaFxs" [(ngModel)]="moneda"
+                  optionLabel="codigo"></p-dropdown>
+              </div>
+              <div class="col-md-2 col-form-label">
+                <label class="form-control-label">CHK</label>
+                <div class="form-check">
+                  <p-inputSwitch [(ngModel)]="checked"></p-inputSwitch>
+                </div>
+              </div>
+              <div *ngIf="checked" class="form-group col-md-7">
+                <label class="form-control-label">ID Soipc</label>
+                <div class="controls">
+                  <div class="input-prepend input-group">
+                    <input [(ngModel)]="idSoipc" value="121312" pInputText class="form-control" size="16" type="text">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="form-group col-md-6">
+                <label class="form-control-label">Nominal</label>
+                <div class="controls">
+                  <div class="input-prepend input-group">
+                    <input pKeyFilter="pnum" (ngModelChange)="calcularValorGiroNominal($event)" [(ngModel)]="nominal" style="border: 1px solid; "
+                      class="form-control" size="16" type="text">
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group col-md-6">
+                <label class="form-control-label">Precio</label>
+                <div class="controls">
+                  <div class="input-prepend input-group">
+                    <input (ngModelChange)="calcularValorGiroPrecio($event)" [(ngModel)]="precio" currencyMask style="border: 1px solid;  "
+                      class="form-control" size="16" type="text">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="form-group col-md-12">
+                <label class="form-control-label">Valor Giro</label>
+                <div class="controls">
+                  <div class="input-prepend input-group">
+                    <input disabled [(ngModel)]="valorGiro" currencyMask style="border: 1px solid;  "
+                      class="form-control" size="16" type="text">
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group col-md-12">
+                <label class="form-control-label">Descripcion</label>
+                <div class="controls">
+                  <div class="input-prepend input-group">
+                    <textarea [(ngModel)]="descripcion"  style="border: 1px solid; "
+                      class="form-control" size="16" type="text"></textarea>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group col-md-12  form-actions">
+                <br/>
+               
+                <button (click)="llamarRecbir()" type="button" class="btn btn-sm btn-success float-right btn-success-spacing">Siguiente</button>
+                <button (click)="clean()" type="button" class="btn btn-sm btn-default float-right btn-primary-spacing">Limpiar campos</button>
+
+              </div>
+            </div>
+          </div>
+        </p-tabPanel>
+        <p-tabPanel header="VENTA">
+          <div class="container-fluid" style="background-color: #ffeaf6;">
+
+            <div class="row">
+              <div class="form-group col-md-3">
+                <label class="form-control-label">Moneda</label>
+
+                <p-dropdown (onChange)="cargarPrecioVentaFx()" autoWidth="false" [style]="{'width':'100%'}" [options]="listaFxs" [(ngModel)]="moneda"
+                  optionLabel="codigo"></p-dropdown>
+
+              </div>
+              <div class="col-md-2 col-form-label">
+                <label class="form-control-label">CHK</label>
+                <div class="form-check">
+                  <p-inputSwitch [(ngModel)]="checked"></p-inputSwitch>
+                </div>
+              </div>
+              <div *ngIf="checked" class="form-group col-md-7">
+                <label class="form-control-label">ID Soipc</label>
+                <div class="controls">
+                  <div class="input-prepend input-group">
+                    <input [(ngModel)]="idSoipc" value="121312" pInputText class="form-control" size="16" type="text">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="form-group col-md-6">
+                <label class="form-control-label">Nominal</label>
+                <div class="controls">
+                  <div class="input-prepend input-group">
+                    <input (ngModelChange)="calcularValorGiroNominal($event)" pKeyFilter="pnum" [(ngModel)]="nominal" style="border: 1px solid;"
+                      class="form-control" size="16" type="text">
+                  </div>
+                </div>
+              </div>
+              <div class="form-group col-md-6">
+                <label class="form-control-label">Precio</label>
+                <div class="controls">
+                  <div class="input-prepend input-group">
+                    <input (ngModelChange)="calcularValorGiroPrecio($event)" [(ngModel)]="precio" currencyMask style="border: 1px solid; "
+                      class="form-control" size="16" type="text">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="form-group col-md-12">
+                <label class="form-control-label">Valor Giro</label>
+                <div class="controls">
+                  <div class="input-prepend input-group">
+                    <input disabled [(ngModel)]="valorGiro" currencyMask style="border: 1px solid; "
+                      class="form-control" size="16" type="text">
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group col-md-12">
+                <label class="form-control-label">Descripcion</label>
+                <div class="controls">
+                  <div class="input-prepend input-group">
+                    <textarea [(ngModel)]="descripcion"  style="border: 1px solid; "
+                      class="form-control" size="16" type="text"></textarea>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group col-md-12  form-actions">
+                <br/>
+                <button (click)="llamarRecbir()" type="button" class="btn btn-sm btn-success float-right btn-success-spacing">Siguiente</button>
+                <button (click)="clean()" type="button" class="btn btn-sm btn-default float-right btn-primary-spacing">Limpiar campos</button>
+
+              </div>
+            </div>
+          </div>
+        </p-tabPanel>
+
+      </p-tabView>
+
+    </div>
+  </div>
+  <!--/.row-->
+  <app-recibir *ngIf="fx" [fx]="fx" [fxBase]="'COP'" [valorTotal]="valorTotal" [show]="mostrarRecibir" [esCompra]="esCompra"
+    (PasarDenominaciones)="recibirDenominaciones($event)" (Cancelar)="cerrarRecibir()">
+  </app-recibir>
+
+  <app-dar *ngIf="fx" [fx]="fx" [fxBase]="'COP'" [valorTotal]="valorTotal" [show]="mostrarDar" [esCompra]="esCompra" (PasarDenominaciones)="darDenominaciones($event)"
+    (Cancelar)="cerrarDar()">
+  </app-dar>
+</div>
+
+<p-confirmDialog key="cdOperacion" [header]="getMsg('administration.operacion.confirm.titulo')" icon="fa fa-question-circle" width="425" #cdOperacion>
+  <p-footer>
+    <button type="button" pButton icon="pi pi-times" [label]="getMsg('confirm.button.no')" (click)="cdOperacion.reject()"></button>
+    <button type="button" pButton icon="pi pi-check" [label]="getMsg('confirm.button.yes')" (click)="cdOperacion.accept()"></button>
+  </p-footer>
+</p-confirmDialog>

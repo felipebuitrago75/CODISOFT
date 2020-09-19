@@ -1,0 +1,12 @@
+.pendiente {
+  background-color: rgb(255, 232, 24) !important;
+  color: #ffffff !important;
+}
+.ejecutada {
+  background-color: rgb(18, 189, 75) !important;
+  color: #ffffff !important;
+}
+.cancelada {
+  background-color: rgb(224, 8, 8) !important;
+  color: #ffffff !important;
+}

@@ -4,7 +4,6 @@ CWD=$(pwd) #Obtiene el directorio de ejecución
 
 ./publish.sh
 
-./deploy.sh
 
 
 

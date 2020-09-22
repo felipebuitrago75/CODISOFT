@@ -20,6 +20,4 @@ before_script:
 services:
   - docker
 script:
-  - npm install
-  - npm run build
   - ./buildTravis.sh

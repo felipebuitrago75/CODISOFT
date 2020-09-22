@@ -1,4 +1,5 @@
-cd ../ && ng build --prod
+cd ../ && npm install
+ng build --prod
 rm -rf ./docker/dist
 cp -r ./dist ./docker
 cd ./docker  && docker build -t fxmanager-ng .

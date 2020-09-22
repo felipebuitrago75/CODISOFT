@@ -4,7 +4,7 @@ CWD=$(pwd) #Obtiene el directorio de ejecución
 
 ./publish.sh
 
-sshpass -p "@C0D1S0FT" ssh root@157.230.88.74 /opt/fxmanager/deploy.sh
+sshpass -p "@C0D1S0FT" ssh root@157.230.88.74 /CODISOFT/deploy.sh
 
 
 

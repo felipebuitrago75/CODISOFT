@@ -17,6 +17,7 @@ cd $CWD
 docker tag co.com.smartcode/fxmanager:0.0.1-SNAPSHOT  fxmanager
 docker rmi -f co.com.smartcode/fxmanager:0.0.1-SNAPSHOT
 docker save -o dist/fxmanager fxmanager
+docker push felipebuitrago75/fxmanager:fxmanager
 
 #Se construye el frontend
 cd fxmanager-ng/docker
@@ -24,6 +25,7 @@ cd fxmanager-ng/docker
 
 cd $CWD
 docker save -o dist/fxmanager-ng fxmanager-ng
+docker push felipebuitrago75/fxmanager:fxmanager-ng
 
 #Se construye la base de datos
 cd config/database
@@ -31,4 +33,4 @@ cd config/database
 
 cd $CWD
 docker save -o dist/fxmanager-db fxmanager-db
-./publish.sh
+docker push felipebuitrago75/fxmanager:fxmanager-db

@@ -11,7 +11,7 @@ docker run -d -p 3306:3306 --name fxmanager-db -e MYSQL_ROOT_PASSWORD=root fxman
 
 docker run -p 80:80 --name fxmanager-ng -d fxmanager-ng
 
-sleep 30
+sleep 300
 
 docker run -p 8080:8080 --name fxmanager --link fxmanager-db:mariadb -d fxmanager
 

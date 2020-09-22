@@ -4,7 +4,7 @@ CWD=$(pwd) #Obtiene el directorio de ejecución
 
 ./publish.sh
 
-sshpass -p "p4r4s1t0" ssh root@68.183.133.209 /opt/fxmanager/deploy.sh
+sshpass -p "@C0D1S0FT" ssh root@157.230.88.74 /opt/fxmanager/deploy.sh
 
 
 

@@ -11,7 +11,7 @@ git pull
 #Se construye el backend
 cd fxmanager-management
 ./gradlew clean 
-./gradlew buildDocker -x test
+./gradlew buildDocker --no-daemon -x test
 
 cd $CWD
 docker tag co.com.smartcode/fxmanager:0.0.1-SNAPSHOT  fxmanager

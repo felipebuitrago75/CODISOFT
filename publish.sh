@@ -9,7 +9,7 @@ docker push felipebuitrago75/fxmanager:fxmanager-ng
 docker push felipebuitrago75/fxmanager:fxmanager
 docker push felipebuitrago75/fxmanager:fxmanager-db
 
-cd ..
+
 ./deploy.sh
 
 

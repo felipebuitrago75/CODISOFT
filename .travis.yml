@@ -1,5 +1,4 @@
 language: java
-language: node_js
 node_js:
   - "11.0"
 install: skip
@@ -8,13 +7,12 @@ dist: trusty
 jdk: oraclejdk11
 before_script:
   - npm install -g @angular/cli
-script:
-  - npm install
-  - npm run build
 services:
   - docker
 before_install:
   # login to docker registries (dockerhub + heroku)
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
 script:
+  - npm install
+  - npm run build
   - ./buildTravis.sh

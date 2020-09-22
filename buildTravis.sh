@@ -1,7 +1,5 @@
 CWD=$(pwd) #Obtiene el directorio de ejecución
 
-./cleanDocker.sh
-
 #Se Actualiza el repositorio
 git pull
 
@@ -12,8 +10,8 @@ cd fxmanager-management
 
 cd $CWD
 docker tag co.com.smartcode/fxmanager:0.0.1-SNAPSHOT  fxmanager
+docker push felipebuitrago75/fxmanager:co.com.smartcode/fxmanager:0.0.1-SNAPSHOT
 docker rmi -f co.com.smartcode/fxmanager:0.0.1-SNAPSHOT
-docker push felipebuitrago75/fxmanager:fxmanager
 
 #Se construye el frontend
 cd fxmanager-ng/docker
@@ -21,7 +19,7 @@ cd fxmanager-ng/docker
 
 cd $CWD
 
-docker push felipebuitrago75/fxmanager:fxmanager
+docker push felipebuitrago75/fxmanager:fxmanager-ng
 
 #Se construye la base de datos
 cd config/database
@@ -29,4 +27,4 @@ cd config/database
 
 cd $CWD
 
-docker push felipebuitrago75/fxmanager:fxmanager-db
+docker push felipebuitrago75/fxmanager:fxmanager-db:latest

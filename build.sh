@@ -10,6 +10,7 @@ git pull
 
 #Se construye el backend
 cd fxmanager-management
+./gradlew --stop
 ./gradlew clean 
 ./gradlew buildDocker --no-daemon -x test
 

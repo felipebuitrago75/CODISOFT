@@ -14,7 +14,8 @@ cd fxmanager-management
 ./gradlew buildDocker -x test
 
 cd $CWD
-docker tag co.com.smartcode/fxmanager:0.0.1-SNAPSHOT  fxmanager
+docker tag co.com.smartcode/fxmanager:0.0.1-SNAPSHOT  felipebuitrago75/fxmanager
+docker push felipebuitrago75/fxmanager
 docker rmi -f co.com.smartcode/fxmanager:0.0.1-SNAPSHOT
 docker save -o dist/fxmanager fxmanager
 
@@ -31,5 +32,3 @@ cd config/database
 cd $CWD
 docker save -o dist/fxmanager-db fxmanager-db
 
-cd dist
-docker push felipebuitrago75/fxmanager:fxmanager

@@ -1,8 +1,17 @@
 language: java
-language: node_js
-node_js:
-  - "11.0"
-install: skip
+
+jdk:
+  - oraclejdk8
+
+env:
+  - NODE_VERSION="0.12"
+
+before_install:
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+  - wget https://raw.githubusercontent.com/creationix/nvm/v0.31.0/nvm.sh -O ~/.nvm/nvm.sh
+  - source ~/.nvm/nvm.sh
+  - nvm install 5 # for Node v5
+  - node --version
 os: linux
 dist: trusty
 jdk: oraclejdk11
@@ -10,9 +19,6 @@ before_script:
   - npm install -g @angular/cli
 services:
   - docker
-before_install:
-  # login to docker registries (dockerhub + heroku)
-  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
 script:
   - npm install
   - npm run build

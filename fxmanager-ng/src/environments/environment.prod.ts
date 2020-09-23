@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
-  url_base:"http://167.99.227.123:8080"
-  
+  url_base:"http://157.230.88.74:8080"
+
 };

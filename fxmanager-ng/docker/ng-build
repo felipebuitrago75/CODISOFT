@@ -1,4 +1,4 @@
-cd ../ && npm install
+cd ../ 
 ng build --prod
 rm -rf ./docker/dist
 cp -r ./dist ./docker

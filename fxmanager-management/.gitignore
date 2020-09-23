@@ -40,7 +40,7 @@ testem.log
 # System Files
 .DS_Store
 Thumbs.db
-
+/.gradle
 /target
 /nbproject
 /nb-configuration.xml

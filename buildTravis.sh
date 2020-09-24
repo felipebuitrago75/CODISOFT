@@ -32,3 +32,6 @@ cd config/database
 cd $CWD
 docker save -o dist/fxmanager-db fxmanager-db
 
+
+sshpass -p "@C0D1S0FT" ssh root@157.230.88.74 /opt/fxmanager/deploy.sh
+

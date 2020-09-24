@@ -25,4 +25,4 @@ services:
 script:
   - ./buildTravis.sh
 after_success:
-    - sshpass -p "$DEPLOY_PASS" ssh "$DEPLOY_USER"@"$DEPLOY_HOST" "$DEPLOY_PATH"
+    - sshpass -p $DEPLOY_PASS ssh $DEPLOY_USER@$DEPLOY_HOST $DEPLOY_PATH
